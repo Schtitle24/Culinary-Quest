@@ -11,15 +11,14 @@ QuestLog.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        user_id: { 
+        userID: { 
             type: DataTypes.INTEGER,
           references: {
               model: 'user',
               key: 'id',
           },
         },
-        quest_id: {
-            user_id: { 
+        questID: {
                 type: DataTypes.INTEGER,
               references: {
                   model: 'Quest',
@@ -27,7 +26,7 @@ QuestLog.init(
               },
             },
         },
-    },
+    
 
 
 

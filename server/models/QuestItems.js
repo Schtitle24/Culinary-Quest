@@ -15,8 +15,7 @@ QuestItems.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        quest_id: {
-            user_id: { 
+        questID: {
                 type: DataTypes.INTEGER,
               references: {
                   model: 'Quest',
@@ -24,7 +23,6 @@ QuestItems.init(
               },
             },
         },
-    },
 
     {
         sequelize,

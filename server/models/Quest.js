@@ -11,7 +11,7 @@ Quest.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        name: {
+        questName: {
             type: DataTypes.STRING,
             allowNull: false,
         }
