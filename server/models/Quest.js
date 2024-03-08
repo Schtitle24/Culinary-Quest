@@ -1,29 +1,37 @@
+// models/Quest.js
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Quest extends Model{};
+class Quest extends Model {}
 
 Quest.init(
-    {
-        id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            primaryKey: true,
-            autoIncrement: true,
-        },
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        }
+  {
+    quest_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
     },
-
-    {
-        sequelize,
-        timestamps: false,
-        freezeTableName: true,
-        underscored: true,
-        modelName: 'Quest',
+    questName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    quest_log_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'QuestLog', 
+        key: 'quest_log_id', 
       },
+    },
+  },
+  {
+    sequelize,
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: 'Quest',
+  }
 );
 
 module.exports = Quest;
