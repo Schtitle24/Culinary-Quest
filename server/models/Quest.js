@@ -16,6 +16,10 @@ Quest.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    questDescription: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     quest_log_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
