@@ -1,4 +1,24 @@
-import './App.css';
+import React from 'react';
+import SignUpForm from '../components/SignUpForm';
+import LoginForm from '../components/LoginForm';
+    const AuthPage = () => {
+        return (
+          <div>
+            <h1>Authentication Page</h1>
+            <div>
+              <h2>Sign Up</h2>
+              <SignUpForm />
+            </div>
+            <div>
+              <h2>Login</h2>
+              <LoginForm />
+            </div>
+          </div>
+        );
+      };
+export default AuthPage;
+6:33
+APP JSX Code . import './App.css';
 import { Outlet } from 'react-router-dom';
 // Important for API Consumption: To enable interaction with our GraphQL API on the front end, we utilize these tools to develop the client-side behavior
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
