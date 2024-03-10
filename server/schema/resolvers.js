@@ -12,13 +12,34 @@ const resolvers = {
     QuestLog: async (parent, { user_id }) => {
       return QuestLog.findOne({
         where: { user_id },
+        // include models 
         include: [{ model: Quest, include: QuestLocation }],
       });
     },
 
     // Query to get a single quest by quest_id
     Quest: async (parent, { quest_id }) => {
-      return Quest.findOne({user_id: quest_id });
+      const quest = await Quest.findOne({
+        where: { quest_id },
+        // Include  models: QuestLocation and QuestItems
+        include: [
+          { model: QuestLocation },
+          { model: QuestItems }
+        ]
+      });
+
+      // Check if the quest exists
+      if (!quest) {
+        throw new Error('Quest not found');
+      }
+
+      // Construct and return an object containing quest details
+      return {
+        questName: quest.questName,
+        description: quest.description,
+        questLocation: quest.QuestLocation ? quest.QuestLocation.questLocation : null,
+        items: quest.QuestItems.map(item => item.itemName)
+      };
     },
 
     // Query to get quest card details
@@ -32,7 +53,7 @@ const resolvers = {
       return {
         questName: quest.questName,
         questLocation: quest.QuestLocation.questLocation,
-        description: quest.description, // Assuming description is a field in Quest model
+        description: quest.description, 
       };
     },
   },
