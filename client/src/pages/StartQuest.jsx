@@ -79,22 +79,6 @@ const StartQuest = () => {
               </Row>
             ))}
           </Column>
-
-          {/* Separator */}
-          <Separator className="col-1">
-            <strong>FROM</strong>
-          </Separator>
-
-          {/* Column 2 */}
-          <Column className="col">
-            {/* Rows */}
-            {Array.from({ length: 7 }).map((_, index) => (
-              <Row className="row" key={index}>
-                {/* Content of each row */}
-                <InputField type="text" placeholder={`Input ${index + 8}`} />
-              </Row>
-            ))}
-          </Column>
         </div>
 
         {/* Submit Button */}

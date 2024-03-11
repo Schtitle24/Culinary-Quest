@@ -7,16 +7,22 @@ import Footer from './pages/Footer';
 const client = new ApolloClient({
     uri: '/graphql',
     cache: new InMemoryCache(),
-  });
+});
 function App() {
-  return (
-     <ApolloProvider client={client}>
-    <div className="container" >
-      <Header />
-      <Outlet />
-      <Footer />
-    </div>
-     </ApolloProvider>
-  );
+    return (
+        <ApolloProvider client={client}>
+            <div style={{
+                margin: 0,
+                padding: 0,
+                height: '100vh',
+                overflowX: 'hidden',
+                backgroundColor: '#EAE7B1'
+            }}>
+                <Header />
+                <Outlet />
+                <Footer />
+            </div>
+        </ApolloProvider>
+    );
 }
 export default App;
