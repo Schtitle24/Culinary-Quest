@@ -1,48 +1,35 @@
 import './App.css';
-import React from 'react';
+import { Outlet } from 'react-router-dom';
+
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import Header from './components/Header';
+import Footer from './components/Footer'
+import SingleQuest from './pages/SingleQuest';
 
 
-
-import Home from './pages/Home';
-import Footer from './components/footer';
-import Header from './components/Header'; 
-// import NavBar from './components/NavBar';
-
-// import { Navbar, NavDropdown, Nav, Container } from 'react-bootstrap';
-
+const client = new ApolloClient({
+    uri: '/graphql',
+    cache: new InMemoryCache(),
+  });
 function App() {
-    return (
-        <>
-            <div className='App'>
-
-                <div id="header">
-                    <Header />
-                </div>
-              
-                <main>
-                    <Home />
-                </main>
-
-                <footer>
-                    <Footer />
-                </footer>
-
-
-            </div>
-
-        </>
-    )
+  return (
+    <ApolloProvider client={client}>
+    <div className="container" >
+      <Header />
+      <Outlet />
+      <SingleQuest />
+      <Footer />
+    </div>
+    </ApolloProvider>
+  );
 }
-
 export default App;
 
 
-// Import necessary dependencies
 // import './App.css';
 // import React from 'react';
 // import { BrowserRouter as Router, Route } from 'react-router-dom';
-
-// Import your components and pages
+// import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 // import Header from './components/Header';
 // import Footer from './components/Footer';
 // import Home from './pages/Home';
@@ -52,30 +39,30 @@ export default App;
 // import SingleQuest from './pages/SingleQuest';
 // import CreateQuest from './pages/CreateQuest';
 
+// const client = new ApolloClient({
+//     uri: '/graphql',
+//     cache: new InMemoryCache(),
+// });
+
 // function App() {
 //     return (
-//         <Router>
-//             <div className="App">
-//                 <div id="header">
+//         <ApolloProvider client={client}>
+//             <Router>
+//                 <div className="container">
 //                     <Header />
-//                 </div>
-              
-//                 <main>
-                   
-                        // <Route path="/" exact component={<Home />} />
+//                     <Switch>
+//                         <Route path="/" exact component={<Home />} />
+//                         <Route path="/quest/:id" component={<SingleQuest />} />
                         {/* <Route path="/dashboard" component={Dashboard} />
                         <Route path="/search" component={SearchResults} />
                         <Route path="/login" component={LoginPage} />
                         <Route path="/quest/:id" component={SingleQuest} />
-                        <Route path="/create" component={CreateQuest} /> */}
-                   
-                {/* </main>
-
-                <footer>
+                        <Route path="/create" component={CreateQuest} />  */}
+                    {/* </Switch>
                     <Footer />
-                </footer>
-            </div>
-        </Router>
+                </div>
+            </Router>
+        </ApolloProvider>
     );
 }
 
