@@ -10,13 +10,13 @@ const client = new ApolloClient({
   });
 function App() {
   return (
-    <ApolloProvider client={client}>
+     <ApolloProvider client={client}>
     <div className="container" >
       <Header />
       <Outlet />
       <Footer />
     </div>
-    </ApolloProvider>
+     </ApolloProvider>
   );
 }
 export default App;
