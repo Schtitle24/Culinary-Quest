@@ -54,20 +54,34 @@ const resolvers = {
 
     //fetch a quest card with quest name, location, and description
     questCard: async (_, { quest_id }) => {
-      const quest = await Quest.findByPk(quest_id, {
-        include: QuestLocation,
+      // Find the quest junction associated with the given quest ID
+      const questJunction = await QuestJunction.findOne({ where: { questId: quest_id },   
+         include: [
+        { model: QuestLocation }, 
+        { model: Quest, 
+          include: [
+            { model: QuestItems },
+            { model: QuestLog, 
+            include: [
+              {model: User}
+            ]}
+          ]}, 
+      ]
       });
-      if (!quest) {
-        throw new Error('Quest not found');
+      if (!questJunction) {
+        throw new Error('Quest junction not found');
       }
+      console.log('questJunction:', questJunction);
+
       return {
+        username: questLog.User.username,
         questName: quest.questName,
         questLocation: quest.QuestLocation.questLocation,
-        description: quest.description, 
+        description: quest.questDescription,
       };
     },
   },
-
+// console log quest junction, create try block for quest card and do not bring a new error. 
   Mutation: {
     //add a new user
     addUser: async (_, { username, email, password }) => {
