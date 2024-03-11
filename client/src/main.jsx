@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import App from './App.jsx'
 import AuthPage from "./pages/AuthPage.jsx"
 import Home from "./pages/Home.jsx"
-const newRoute = createBrowserRouter([
+const router = createBrowserRouter([
   {
     path: '/', //sets landing page and base url
     element: <App />,
@@ -26,7 +26,9 @@ const newRoute = createBrowserRouter([
     //     path: '/StartQuest',
     //     element: <StartQuest />
     //   },
-    ]
-  }
-])
+    ],
+  },
+]);
 ReactDOM.createRoot(document.getElementById('root')).render(
+  <RouterProvider router={router} />
+)
