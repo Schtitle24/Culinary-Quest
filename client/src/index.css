@@ -25,13 +25,14 @@
   
   body {
     margin: 0 !important;
-    /* display: flex !important; */
+    padding: 0 ; 
+    display: flex !important;
     justify-content: center !important;
     /* place-items: center !important; */
-    /* width: 100% !important; */
-    /* height: 100vh !important; */
+    width: 100% !important;
+    height: 100vh !important;
     background-color: #EAE7B1 !important; 
-    /* max-width: 100% !important;  */
+    max-width: 100% !important; 
   }
         
       
@@ -84,7 +85,7 @@
       background-color: #ffffff;
     }
     a:hover {
-      color: #747bff;
+      color: #065446;
     }
     button {
       background-color: #f9f9f9;

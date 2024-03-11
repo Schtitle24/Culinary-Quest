@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import questimg from '../imgs/'
+import questimg from '../imgs/CQ-img.jpeg'
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  
 `;
 
 const LogoSection = styled.div`
@@ -144,8 +145,8 @@ const Home = () => {
               </svg>
             </SearchIcon>
             <SearchInput type='text' />
-            
-        
+
+
           </Search>
         </Form>
         <ButtonSection>
