@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 require('dotenv').config();
-
+console.log(process.env);
 let sequelize;
 
 if (process.env.JAWSDB_URL) {
