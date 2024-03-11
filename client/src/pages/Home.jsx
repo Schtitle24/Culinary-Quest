@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import questimg from '../imgs/CQ-img.jpeg'
 
 const Container = styled.div`
   display: flex;
@@ -20,6 +21,9 @@ const LogoSection = styled.div`
     margin-top: auto;
   }
 `;
+
+
+
 
 const SearchSection = styled.div`
   padding: 20px;
@@ -124,8 +128,10 @@ const Home = () => {
     <Container className='my-auto'>
       <LogoSection>
         <img
-          src=''
-          alt=''
+          src={questimg}
+          alt='quest-img'
+          className='img-responsive h-full w-250 object-cover rounded-20'
+
         />
       </LogoSection>
       <SearchSection>
