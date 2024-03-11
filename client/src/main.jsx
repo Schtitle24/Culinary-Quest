@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import App from './App.jsx'
 import AuthPage from "./pages/AuthPage.jsx"
 import Home from "./pages/Home.jsx"
-import StartAQuest from './pages/StartAQuest.jsx'
+import StartQuest from './pages/StartQuest.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 
 
@@ -23,8 +23,8 @@ const router = createBrowserRouter([
                                 element: <AuthPage />
                         },
                         {
-                                path: '/StartAQuest',
-                                element: <StartAQuest />
+                                path: '/StartQuest',
+                                element: <StartQuest />
                         },
                         {
                                 path: '/Dashboard',
