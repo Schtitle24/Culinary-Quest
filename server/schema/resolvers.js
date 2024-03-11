@@ -1,49 +1,59 @@
 const { User, QuestLog, Quest, QuestLocation, QuestItems } = require('../models');
 
-// query our quest object a Quest
-// query out quest log which will identical to the 21-20 example
-//query for card with qustlocation, username, and description
-
-//  upodate mutation will be for checckboxes.  
-// allow users to delete entire quests. 
 const resolvers = {
   Query: {
-    // Query to get all quests associated with a user_id
-    QuestLog: async (parent, { user_id }) => {
-      return QuestLog.findOne({
-        where: { user_id },
-        // include models 
-        include: [{ model: Quest, include: QuestLocation }],
-      });
+    //fetch a single user by user_id
+    user: async (_, { user_id }) => {
+      return User.findByPk(user_id);
     },
 
-    // Query to get a single quest by quest_id
-    Quest: async (parent, { quest_id }) => {
-      const quest = await Quest.findOne({
-        where: { quest_id },
-        // Include  models: QuestLocation and QuestItems
+    //fetch a single quest log by quest_log_id
+    questLog: async (_, { quest_log_id }) => {
+      return QuestLog.findByPk(quest_log_id);
+    },
+
+    //fetch a single quest location by quest_location_id
+    questLocation: async (_, { quest_location_id }) => {
+      return QuestLocation.findByPk(quest_location_id);
+    },
+
+    //fetch a single quest item by quest_item_id
+    questItem: async (_, { quest_item_id }) => {
+      return QuestItems.findByPk(quest_item_id);
+    },
+
+    //fetch all quests
+    quests: async () => {
+      return Quest.findAll();
+    },
+
+    //fetch all quest logs
+    questLogs: async () => {
+      return QuestLog.findAll();
+    },
+
+    //fetch all quest locations
+    questLocations: async () => {
+      return QuestLocation.findAll();
+    },
+
+    //fetch all quest items
+    questItems: async () => {
+      return QuestItems.findAll();
+    },
+
+    //fetch a single quest by quest_id with associated quest location and items
+    quest: async (_, { quest_id }) => {
+      return Quest.findByPk(quest_id, {
         include: [
           { model: QuestLocation },
           { model: QuestItems }
         ]
       });
-
-      // Check if the quest exists
-      if (!quest) {
-        throw new Error('Quest not found');
-      }
-
-      // Construct and return an object containing quest details
-      return {
-        questName: quest.questName,
-        description: quest.description,
-        questLocation: quest.QuestLocation ? quest.QuestLocation.questLocation : null,
-        items: quest.QuestItems.map(item => item.itemName)
-      };
     },
 
-    // Query to get quest card details
-    QuestCard: async (parent, { quest_id }) => {
+    //fetch a quest card with quest name, location, and description
+    questCard: async (_, { quest_id }) => {
       const quest = await Quest.findByPk(quest_id, {
         include: QuestLocation,
       });
@@ -59,10 +69,63 @@ const resolvers = {
   },
 
   Mutation: {
-    // Mutation to add a new quest
-    addQuest: async (_, { questName, quest_log_id }) => {
-      return Quest.create({ questName, quest_log_id });
+    //add a new user
+    addUser: async (_, { username, email, password }) => {
+      return User.create({ username, email, password });
     },
+
+    //update an existing user
+    updateUser: async (_, { user_id, username, email, password }) => {
+      const user = await User.findByPk(user_id);
+      if (!user) {
+        throw new Error('User not found');
+      }
+      user.username = username;
+      user.email = email;
+      user.password = password;
+      await user.save();
+      return user;
+    },
+
+    //delete a user
+    deleteUser: async (_, { user_id }) => {
+      const user = await User.findByPk(user_id);
+      if (!user) {
+        throw new Error('User not found');
+      }
+      await user.destroy();
+      return user;
+    },
+
+    //add a new quest
+    addQuest: async (_, { questName, questDescription, quest_log_id }) => {
+      return Quest.create({ questName, questDescription, quest_log_id });
+    },
+
+    //update an existing quest
+    updateQuest: async (_, { quest_id, questName, questDescription, quest_log_id }) => {
+      const quest = await Quest.findByPk(quest_id);
+      if (!quest) {
+        throw new Error('Quest not found');
+      }
+      quest.questName = questName;
+      quest.questDescription = questDescription;
+      quest.quest_log_id = quest_log_id;
+      await quest.save();
+      return quest;
+    },
+
+    //delete a quest
+    deleteQuest: async (_, { quest_id }) => {
+      const quest = await Quest.findByPk(quest_id);
+      if (!quest) {
+        throw new Error('Quest not found');
+      }
+      await quest.destroy();
+      return quest;
+    },
+
+    
   },
 };
 
