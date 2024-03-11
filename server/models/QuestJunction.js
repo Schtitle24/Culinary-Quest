@@ -1,7 +1,12 @@
-module.exports = (sequelize, DataTypes) => {
-  const QuestJunction = sequelize.define('QuestJunction', {
+const { Model, DataTypes } = require('sequelize')
+const sequelize = require('../config/connection');
+
+
+class QuestJunction extends Model {}
+
+QuestJunction.init({
     // Define columns
-    questId: {
+    quest_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
@@ -10,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'quest_id'
       }
     },
-    questLocationId: {
+    quest_location_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
@@ -18,8 +23,14 @@ module.exports = (sequelize, DataTypes) => {
         model: 'QuestLocation',
         key: 'quest_location_id'
       }
-    }
+    },
+  },
+  {
+    sequelize,
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: 'QuestJunction',
   });
 
-  return QuestJunction;
-};
+ module.exports = QuestJunction;
