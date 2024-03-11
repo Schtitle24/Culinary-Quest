@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import questimg from '../imgs/CQ-img.jpeg'
+import questimg from '../imgs/'
 
 const Container = styled.div`
   display: flex;
@@ -21,9 +21,6 @@ const LogoSection = styled.div`
     margin-top: auto;
   }
 `;
-
-
-
 
 const SearchSection = styled.div`
   padding: 20px;
