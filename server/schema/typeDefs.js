@@ -29,6 +29,12 @@ type QuestLog {
     itemName: String
     quest_id: Int
   }
+  type QuestCard {
+    username: String
+    questName: String
+    questLocation: String
+    description: String
+  }
   type Query {
     users: [User]
     questLogs: [QuestLog]
@@ -42,6 +48,7 @@ type QuestLog {
     questJunction(questId: Int, questLocationId: Int): QuestJunction
     questItem(quest_item_id: Int): QuestItems
     quest(quest_id: Int): Quest
+    questCard(quest_id: Int): QuestCard
   }
   type Mutation {
     addUser(username: String, email: String, password: String): User
@@ -63,7 +70,7 @@ type QuestLog {
     updateQuestItems(quest_item_id: Int, itemName: String, quest_id: Int): QuestItems
     deleteQuestItems(quest_item_id: Int): QuestItems
 
-    addQuest(questName: String, questDescription: String!, quest_log_id: Int): Quest
+    addQuest(questName: String, questDescription: String, quest_log_id: Int): Quest
     updateQuest(quest_id: Int, questName: String, questDescription: String, quest_log_id: Int): Quest
     deleteQuest(quest_id: Int): Quest
   }
