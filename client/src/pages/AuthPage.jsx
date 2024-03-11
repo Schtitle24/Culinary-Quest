@@ -4,7 +4,7 @@ import LoginForm from '../components/LoginForm';
     const AuthPage = () => {
         return (
           <div>
-            <h1>Authentication Page</h1>
+            <h1>Welcome to Culinary Quest</h1>
             <div>
               <h2>Sign Up</h2>
               <SignUpForm />

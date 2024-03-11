@@ -3,10 +3,9 @@ const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
-
+const db = require('./models');
 
 const { typeDefs, resolvers } = require('./schema');
-const sequelize = require('./config/connection');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -37,7 +36,7 @@ const server = new ApolloServer({
             });
           } 
 
-          sequelize.sync({ force: false }).then(() => {
+          db.sequelize.sync({ force: false }).then(() => {
             app.listen(PORT, () => {
                 console.log(`API server running on port ${PORT}!`);
                 console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
