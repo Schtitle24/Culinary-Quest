@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import App from './App.jsx'
 import AuthPage from "./pages/AuthPage.jsx"
 import Home from "./pages/Home.jsx"
+import StartQuest from './pages/StartAQuest.jsx'
 const router = createBrowserRouter([
   {
     path: '/', //sets landing page and base url
@@ -18,14 +19,14 @@ const router = createBrowserRouter([
         path: '/AuthPage',
         element: <AuthPage />
       },
-    //   {
-    //     path: '/SingleQuest',
-    //     element: <SingleQuest />
-    //   },
-    //   {
-    //     path: '/StartQuest',
-    //     element: <StartQuest />
-    //   },
+      // {
+      //   path: '/SingleQuest',
+      //   element: <SingleQuest />
+      // },
+      {
+        path: '/StartQuest',
+        element: <StartQuest />
+      },
     ],
   },
 ]);
