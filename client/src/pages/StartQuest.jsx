@@ -75,7 +75,7 @@ const StartQuest = () => {
          <SearchInput
            type="text"
            className="form-control mb-3"
-           placeholder="Search..."
+           placeholder="Search Your City"
            value={formData.search}
            onChange={(e) => setFormData({ ...formData, search: e.target.value })}
          />
