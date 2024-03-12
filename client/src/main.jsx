@@ -6,6 +6,7 @@ import AuthPage from "./pages/AuthPage.jsx"
 import Home from "./pages/Home.jsx"
 import StartQuest from './pages/StartQuest.jsx'
 import Dashboard from './pages/Dashboard.jsx'
+import SingleQuest from './pages/SingleQuest.jsx'
 const router = createBrowserRouter([
         {
                 path: '/',
@@ -28,6 +29,11 @@ const router = createBrowserRouter([
                                 path: '/Dashboard',
                                 element: <Dashboard />
                         },
+                        {
+                          path: '/SingleQuest',
+                          element: <SingleQuest />
+                  },
+
 
                 ],
         },
