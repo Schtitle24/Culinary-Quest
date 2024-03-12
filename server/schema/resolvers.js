@@ -17,7 +17,7 @@ const resolvers = {
       return QuestLog.findByPk(quest_log_id);
     },
 
-    //fetch a single quest location by quest_location_id
+    //fetch a single quest location by location
     questLocation: async (_, { quest_location_id }) => {
       return QuestLocation.findByPk(quest_location_id);
     },
@@ -69,33 +69,67 @@ const resolvers = {
     },
 
     //fetch a quest card with quest name, location, and description
-    questCard: async (_, { quest_id }) => {
-      // Find the quest junction associated with the given quest ID
-      const questJunction = await Quest.findByPk(quest_id,
-        {
-          include: [
-            { model: QuestLocation, through: QuestJunction },
-            { model: QuestItems },
-            {
-              model: QuestLog,
+    questCard: async (_, { city }) => {
+      try {
+        // Check if city is provided
+        if (!city) {
+          throw new Error('City is required');
+        }
+    
+        // Find the quest based on the given city needs to be a findall
+        // const questJunction = await Quest.findAll({
+        //   include: [
+        //     {
+        //       model: QuestLocation,
+        //       where: { quest_location: city } 
+        //     },
+        //     { model: QuestItems },
+        //     {
+        //       model: QuestLog,
+        //       include: [
+        //         { model: User }
+        //       ]
+        //     }
+        //   ]
+        // });
+        const questJunction = await QuestLocation.findOne({
+            where: {quest_location: city},
+            include: [
+              {
+              model: Quest,
+              include: [
+                {
+                  model: QuestItems
+                }, 
+                {
+                  model: QuestLog,
               include: [
                 { model: User }
-              ]
-            }
-          ]
-        });
+              
+              ]}]
+              },
+            ]
 
-      if (!questJunction) {
-        throw new Error('Quest junction not found');
+        })
+    
+        if (!questJunction) {
+          throw new Error('Quest junction not found');
+        }
+    
+        console.log('questJunction:', questJunction);
+        console.log('username:', questJunction.Quests);
+      
+    
+        return questJunction.Quests.map(item => ({
+          username: item.QuestLog.User.username,
+          questName: item.questName,
+          quest_location: questJunction.quest_location,
+          description: item.questDescription,
+        }));
+      } catch (error) {
+        console.error('Error fetching quest card:', error);
+        throw new Error('Error fetching quest card');
       }
-      console.log('questJunction:', questJunction);
-
-      return {
-        username: questJunction.QuestLog.User.username,
-        questName: questJunction.questName,
-        questLocation: questJunction.QuestLocations[0].questLocation,
-        description: questJunction.questDescription,
-      };
     },
   },
   Mutation: {
@@ -183,8 +217,8 @@ const resolvers = {
     },
 
     // Update quest location mutation resolver
-    updateQuestLocation: async (_, { quest_location_id, questLocation }) => {
-      const questLocationInstance = await QuestLocation.findByPk(quest_location_id);
+    updateQuestLocation: async (_, { location, questLocation }) => {
+      const questLocationInstance = await QuestLocation.findByPk(location);
       if (!questLocationInstance) {
         throw new Error('Quest location not found');
       }
@@ -194,8 +228,8 @@ const resolvers = {
     },
 
     // Delete quest location mutation resolver
-    deleteQuestLocation: async (_, { quest_location_id }) => {
-      const questLocationInstance = await QuestLocation.findByPk(quest_location_id);
+    deleteQuestLocation: async (_, { location }) => {
+      const questLocationInstance = await QuestLocation.findByPk(location);
       if (!questLocationInstance) {
         throw new Error('Quest location not found');
       }
@@ -203,23 +237,23 @@ const resolvers = {
       return questLocationInstance;
     },
 
-    // Add quest junction mutation resolver currently not working
-    addQuestJunction: async (_, { questId, questLocationId }) => {
-      console.log({ questId, questLocationId });
-      return QuestJunction.create({ quest_id: questId, quest_location_id: questLocationId });
+    // // Add quest junction mutation resolver currently not working
+    // addQuestJunction: async (_, { questId, questLocationId }) => {
+    //   console.log({ questId, questLocationId });
+    //   return QuestJunction.create({ quest_id: questId, location: questLocationId });
 
-    },
+    // },
 
-    // Delete quest junction mutation resolver
-    deleteQuestJunction: async (_, { quest_id, quest_location_id }) => {
-      const deletedCount = await QuestJunction.destroy({
-        where: { quest_id, quest_location_id }
-      });
-      if (deletedCount === 0) {
-        throw new Error('Quest junction not found');
-      }
-      return { quest_id, quest_location_id };
-    },
+    // // Delete quest junction mutation resolver
+    // deleteQuestJunction: async (_, { quest_id, location }) => {
+    //   const deletedCount = await QuestJunction.destroy({
+    //     where: { quest_id, location }
+    //   });
+    //   if (deletedCount === 0) {
+    //     throw new Error('Quest junction not found');
+    //   }
+    //   return { quest_id, location };
+    // },
 
     // Add quest items mutation resolver
     addQuestItems: async (_, { itemName, quest_id }) => {
@@ -248,9 +282,14 @@ const resolvers = {
     },
 
     // Add quest mutation resolver
-    addQuest: async (_, { questName, questDescription, quest_log_id }) => {
-      return Quest.create({ questName, questDescription, quest_log_id });
-    },
+    addQuest: async (_, { questName, questDescription, quest_log_id, quest_location}) => {
+      const location = await QuestLocation.findOrCreate({
+        where: {quest_location}});
+        console.log(location)
+      return Quest.create({ questName, questDescription, quest_log_id, quest_location_id: location[0].quest_location_id });
+    },//use findOneOrCreate to find or create a location. 
+
+
 
     // Update quest mutation resolver
     updateQuest: async (_, { quest_id, questName, questDescription, quest_log_id }) => {

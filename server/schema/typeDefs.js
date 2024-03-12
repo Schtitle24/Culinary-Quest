@@ -10,6 +10,7 @@ type Quest {
     questName: String!
     questDescription: String!
     quest_log_id: Int!
+    quest_location_id: Int!
 }
 type QuestLog {
     quest_log_id: Int!
@@ -18,7 +19,7 @@ type QuestLog {
   }
   type QuestLocation {
     quest_location_id: Int!
-    questLocation: String!
+    quest_location: String!
   }
   type QuestJunction {
     quest_id: Int!
@@ -32,7 +33,7 @@ type QuestLog {
   type QuestCard {
     username: String!
     questName: String!
-    questLocation: String!
+    quest_location: String!
     description: String!
   }
   type Auth {
@@ -49,10 +50,10 @@ type QuestLog {
     user(user_id: Int!): User
     questLog(quest_log_id: Int!): QuestLog
     questLocation(quest_location_id: Int!): QuestLocation
-    questJunction(questId: Int, questLocationId: Int!): QuestJunction
+    questJunction(quest_id: Int, quest_location_id: Int!): QuestJunction
     questItem(quest_item_id: Int!): QuestItems
     quest(quest_id: Int!): Quest
-    questCard(quest_id: Int!): QuestCard
+    questCard(city: String!,): [QuestCard]
   }
   type Mutation {
     addUser(username: String!, email: String!, password: String!): User
@@ -75,7 +76,7 @@ type QuestLog {
     updateQuestItems(quest_item_id: Int!, itemName: String!, quest_id: Int!): QuestItems
     deleteQuestItems(quest_item_id: Int!): QuestItems
 
-    addQuest(questName: String!, questDescription: String!, quest_log_id: Int!): Quest
+    addQuest(questName: String!, questDescription: String!, quest_log_id: Int!, quest_location: String!): Quest
     updateQuest(quest_id: Int!, questName: String!, questDescription: String!, quest_log_id: Int!): Quest
     deleteQuest(quest_id: Int!): Quest
   }
