@@ -18,7 +18,6 @@ QuestJunction.init({
     quest_location_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true,
       references: {
         model: 'QuestLocation',
         key: 'quest_location_id'
