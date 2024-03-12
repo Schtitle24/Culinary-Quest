@@ -1,10 +1,15 @@
 const { User, QuestLog, Quest, QuestJunction, QuestLocation, QuestItems } = require('../models');
+const { signToken, AuthenticationError } = require('../utils/auth');
+
 
 const resolvers = {
   Query: {
     //fetch a single user by user_id
     user: async (_, { user_id }) => {
       return User.findByPk(user_id);
+    },
+    users: async () => {
+      return User.findAll();
     },
 
     //fetch a single quest log by quest_log_id
@@ -38,8 +43,19 @@ const resolvers = {
     },
 
     //fetch all quest items
-    questItems: async () => {
-      return QuestItems.findAll();
+    questItems: async (_, { quest_id }) => {
+      try {
+        const quest = await Quest.findByPk(quest_id);
+        if (!quest) {
+          throw new Error('Quest not found');
+        }
+        const questItems = await quest.getQuestItems();
+        console.log(questItems);
+        return questItems;
+
+      } catch (error) {
+        throw new Error(`Failed to fetch quest items: ${error.message}`);
+      }
     },
 
     //fetch a single quest by quest_id with associated quest location and items
@@ -56,15 +72,19 @@ const resolvers = {
     questCard: async (_, { quest_id }) => {
       // Find the quest junction associated with the given quest ID
       const questJunction = await Quest.findByPk(quest_id,
-         { include: [
-        { model: QuestLocation, through: QuestJunction }, 
-       { model: QuestItems },
-          { model: QuestLog, 
-            include: [
-              {model: User}
-            ]}
-          ]});
-    
+        {
+          include: [
+            { model: QuestLocation, through: QuestJunction },
+            { model: QuestItems },
+            {
+              model: QuestLog,
+              include: [
+                { model: User }
+              ]
+            }
+          ]
+        });
+
       if (!questJunction) {
         throw new Error('Quest junction not found');
       }
@@ -106,7 +126,30 @@ const resolvers = {
       await user.destroy();
       return user;
     },
+    // Login user
+    login: async (parent, { email, password }) => {
+      console.log({email, password})
+      const user = await User.findOne({
+        where: {
+          email
+        }
+      });
+      console.log({user})
+      if (!user) {
+        throw AuthenticationError;
+      }
 
+      const validPassword = await user.checkPassword(password);
+
+      if (!validPassword) {
+        console.log(validPassword);
+        throw AuthenticationError;
+      }
+
+      const token = signToken(user);
+
+      return { token, user };
+    },
     // Add quest log mutation resolver
     addQuestLog: async (_, { user_id }) => {
       return QuestLog.create({ user_id });
@@ -162,9 +205,9 @@ const resolvers = {
 
     // Add quest junction mutation resolver currently not working
     addQuestJunction: async (_, { questId, questLocationId }) => {
-      console.log( {questId, questLocationId});
+      console.log({ questId, questLocationId });
       return QuestJunction.create({ quest_id: questId, quest_location_id: questLocationId });
-      
+
     },
 
     // Delete quest junction mutation resolver
