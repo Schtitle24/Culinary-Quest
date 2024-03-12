@@ -21,8 +21,8 @@ type QuestLog {
     questLocation: String!
   }
   type QuestJunction {
-    questId: Int!
-    questLocationId: Int!
+    quest_id: Int!
+    quest_location_id: Int!
   }
   type QuestItems {
     quest_item_id: Int!
@@ -55,8 +55,8 @@ type QuestLog {
     updateUser(user_id: Int!, username: String!, email: String!, password: String!): User
     deleteUser(user_id: Int!): User
 
-    addQuestLog(user_id: Int!, completionDate: String!): QuestLog
-    updateQuestLog(quest_log_id: Int!, user_id: Int!, completionDate: String!): QuestLog
+    addQuestLog(user_id: Int!): QuestLog
+    updateQuestLog(quest_log_id: Int!, user_id: Int!): QuestLog
     deleteQuestLog(quest_log_id: Int!): QuestLog
 
     addQuestLocation(questLocation: String!): QuestLocation
