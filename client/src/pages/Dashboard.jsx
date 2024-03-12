@@ -1,46 +1,37 @@
-
-import React, { useState, useEffect } from 'react';
-import { Container, Carousel, Button } from 'react-bootstrap'; 
+import React from 'react';
+import { Container, Carousel } from 'react-bootstrap'; // Import Carousel component
 import { BsStarFill } from 'react-icons/bs'; 
 import oldPaper from '../imgs/old-paper.jpeg'; 
 
 function Dashboard() {
-    // Initialize saved quests state
-    const [savedQuests, setSavedQuests] = useState([]);
-
-    // Load saved quests from local storage when component mounts
-    useEffect(() => {
-        const savedQuestsFromStorage = JSON.parse(localStorage.getItem('savedQuests')) || [];
-        setSavedQuests(savedQuestsFromStorage);
-    }, []);
-
-   
-    const clearSavedQuests = () => {
-        localStorage.removeItem('savedQuests');
-        setSavedQuests([]); 
-    };
-
+    // Sample data for saved quests
+    const savedQuests = [
+        { id: 1, title: 'Quest 1', description: 'Description for Quest 1' },
+        { id: 2, title: 'Quest 2', description: 'Description for Quest 2' },
+        { id: 3, title: 'Quest 3', description: 'Description for Quest 3' },
+        // Add more saved quests as needed
+    ];
     return (
         <Container>
-            <h2 className="my-4 text-center">My Quests</h2>
+            <h2 className="my-4 text-center">Saved Quests</h2>
             <Carousel>
-                {savedQuests.map((quest, index) => (
-                    <Carousel.Item key={index}>
+                {savedQuests.map((quest) => (
+                    <Carousel.Item key={quest.id}>
                         <div style={{ 
                             position: 'relative', 
                             backgroundImage: `url(${oldPaper})`, 
                             backgroundSize: 'cover', 
                             backgroundRepeat: 'no-repeat',
-                            height: '300px' 
+                            height: '300px' // Set height as needed
                             }}>
                             {/* Star icon at the top right */}
                             <BsStarFill style={{
                                 position: 'absolute',
                                 top: '10px',
                                 right: '10px',
-                                color: 'gold', 
-                                fontSize: '24px', 
-                                zIndex: '999', 
+                                color: 'gold', // Adjust color as needed
+                                fontSize: '24px', // Adjust size as needed
+                                zIndex: '999', // Ensure the icon stays above other content
                             }} />
                             <div className="carousel-caption">
                                 <h3>{quest.title}</h3>
@@ -50,11 +41,7 @@ function Dashboard() {
                     </Carousel.Item>
                 ))}
             </Carousel>
-            <div className="text-center my-4">
-                <Button variant="danger" onClick={clearSavedQuests}>Clear Saved Quests</Button>
-            </div>
-        </Container>
+            </Container>
     );
 }
-
 export default Dashboard;

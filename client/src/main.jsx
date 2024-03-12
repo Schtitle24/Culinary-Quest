@@ -31,11 +31,6 @@ const router = createBrowserRouter([
                                 path: '/Dashboard',
                                 element: <Dashboard />
                         },
-                        {
-
-                          path: '/SingleQuest',
-                          element: <SingleQuest />
-                  },
 
                            {    path: '/SearchResults',
 
