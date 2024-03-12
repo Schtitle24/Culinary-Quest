@@ -97,12 +97,16 @@ const Title = styled.h1`
   padding: 20px;
   ${mysteryQuestFont}
 
+  @media screen and (max-width: 320px) 
+    font-size: 36px;
+    padding: 10px;
+  }
+
   @media screen and (max-width: 583px) {
-   
     text-align: center;
-  
   }
 `;
+
 
 function Header() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);

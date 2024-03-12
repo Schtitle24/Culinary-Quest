@@ -14,13 +14,6 @@ function Dashboard() {
         setSavedQuests(savedQuestsFromStorage);
     }, []);
 
-    // // Function to save quest
-    // const saveQuest = (quest) => {
-    //     const updatedQuests = [...savedQuests, quest];
-    //     setSavedQuests(updatedQuests);
-    //     localStorage.setItem('savedQuests', JSON.stringify(updatedQuests));
-    // };
-
    
     const clearSavedQuests = () => {
         localStorage.removeItem('savedQuests');

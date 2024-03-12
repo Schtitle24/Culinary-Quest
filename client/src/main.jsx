@@ -32,7 +32,14 @@ const router = createBrowserRouter([
                                 element: <Dashboard />
                         },
                         {
-                                path: '/SearchResults',
+
+                          path: '/SingleQuest',
+                          element: <SingleQuest />
+                  },
+
+                           {    path: '/SearchResults',
+
+                          
                                 element: <SearchResults />
                         },
 
