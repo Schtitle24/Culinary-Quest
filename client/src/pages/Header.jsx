@@ -1,14 +1,13 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
 const ButtonSection = styled.div`
   display: flex;
-  justify-content: flex-end; 
-  align-items: center; 
-  height: 50%; 
+  justify-content: flex-end; /* Align buttons to the right */
+  align-items: center; /* Center buttons vertically */
+  height: 100%; /* Ensure full height */
+  padding: 10px 40px;
 `;
-
 const Button = styled.button`
  background-color: #065446;
     background-image: linear-gradient(to right, #3C6255 0%, #61876E 100%);
@@ -27,27 +26,15 @@ const Button = styled.button`
     background-color: #D0CB92; 
   }
 `;
-
 function Header() {
     return (
-        <div className="navbar navbar-expand-lg navbar-light" style={{ 
-          backgroundColor: '#065446', 
-          color: '#EAE7B1', 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center' 
-          }}>
-            <h1 className="navbar-brand" style={{ 
-              color: '#EAE7B1', 
-              fontSize: '24px', 
-              fontWeight: 'bold' 
-              }}>Culinary Quest</h1>
+        <div className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: '#065446', color: '#EAE7B1', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h1 className="navbar-brand" style={{ color: '#EAE7B1', fontSize: '24px', fontWeight: 'bold', padding: 20 }}>Culinary Quest</h1>
             <ButtonSection>
-                <Button as={Link} to="/AuthPage">Sign Up</Button>
-                <Button as={Link} to="/AuthPage">Login</Button>
+                <Button>Sign Up</Button>
+                <Button>Login</Button>
             </ButtonSection>
         </div>
     );
 }
-
 export default Header;

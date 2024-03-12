@@ -62,48 +62,11 @@ function Dashboard() {
         // Add more saved quests as needed
     ];
 
-    // Sample data for own quests
-    const ownQuests = [
-        { id: 1, title: 'My Quest 1', description: 'Description for My Quest 1' },
-        { id: 2, title: 'My Quest 2', description: 'Description for My Quest 2' },
-        { id: 3, title: 'My Quest 3', description: 'Description for My Quest 3' },
-        // Add more own quests as needed
-    ];
-
     return (
         <Container>
-            <h2 className="my-4 text-center">Saved Quests</h2>
+            <h2 className="my-4 text-center">My Quests</h2>
             <Carousel>
                 {savedQuests.map((quest) => (
-                    <Carousel.Item key={quest.id}>
-                        <div style={{ 
-                            position: 'relative', 
-                            backgroundImage: `url(${oldPaper})`, 
-                            backgroundSize: 'cover', 
-                            backgroundRepeat: 'no-repeat',
-                            height: '300px' // Set height as needed
-                            }}>
-                            {/* Star icon at the top right */}
-                            <BsStarFill style={{
-                                position: 'absolute',
-                                top: '10px',
-                                right: '10px',
-                                color: 'gold', // Adjust color as needed
-                                fontSize: '24px', // Adjust size as needed
-                                zIndex: '999', // Ensure the icon stays above other content
-                            }} />
-                            <div className="carousel-caption">
-                                <h3>{quest.title}</h3>
-                                <p>{quest.description}</p>
-                            </div>
-                        </div>
-                    </Carousel.Item>
-                ))}
-            </Carousel>
-
-            <h2 className="my-4 text-center">My Own Quests</h2>
-            <Carousel>
-                {ownQuests.map((quest) => (
                     <Carousel.Item key={quest.id}>
                         <div style={{ 
                             position: 'relative', 
