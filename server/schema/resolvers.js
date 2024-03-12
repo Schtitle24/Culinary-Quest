@@ -1,4 +1,4 @@
-const { User, QuestLog, Quest, QuestLocation, QuestItems } = require('../models');
+const { User, QuestLog, Quest, QuestLocation, QuestItems, QuestJunction } = require('../models');
 
 const resolvers = {
   Query: {

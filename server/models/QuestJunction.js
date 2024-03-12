@@ -21,5 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
-  return QuestJunction;
+
 };
+
+module.exports = QuestJunction;
