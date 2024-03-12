@@ -1,31 +1,40 @@
-import decode from 'jwt-decode';
+import {jwtDecode as decode} from 'jwt-decode';
 
 class AuthService {
-  // Existing methods...
+  getProfile() {
+    return decode(this.getToken());
+  }
 
-  registerUser(userData) {
-    // Assuming you have an endpoint for user registration
-    return fetch('/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const { token } = data;
-        this.login(token); // Call login method to store token in localStorage
-      })
-      .catch((error) => {
-        console.error('Error registering user:', error);
-        throw new Error('Error registering user');
-      });
+  loggedIn() {
+    const token = this.getToken();
+    // If there is a token and it's not expired, return `true`
+    return token && !this.isTokenExpired(token) ? true : false;
+  }
+
+  isTokenExpired(token) {
+    // Decode the token to get its expiration time that was set by the server
+    const decoded = decode(token);
+    // If the expiration time is less than the current time (in seconds), the token is expired and we return `true`
+    if (decoded.exp < Date.now() / 1000) {
+      localStorage.removeItem('id_token');
+      return true;
+    }
+    // If token hasn't passed its expiration time, return `false`
+    return false;
+  }
+
+  getToken() {
+    return localStorage.getItem('id_token');
+  }
+
+  login(idToken) {
+    localStorage.setItem('id_token', idToken);
+    window.location.assign('/');
+  }
+
+  logout() {
+    localStorage.removeItem('id_token');
+    window.location.reload();
   }
 }
 

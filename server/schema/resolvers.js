@@ -101,7 +101,10 @@ const resolvers = {
   Mutation: {
     // Add user mutation resolver
     addUser: async (_, { username, email, password }) => {
-      return User.create({ username, email, password });
+       const user = await User.create({ username, email, password });
+      const token = signToken(user);
+
+      return { token, user };
     },
 
     // Update user mutation resolver
