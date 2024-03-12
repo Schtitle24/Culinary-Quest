@@ -6,6 +6,8 @@ import AuthPage from "./pages/AuthPage.jsx"
 import Home from "./pages/Home.jsx"
 import StartQuest from './pages/StartQuest.jsx'
 import Dashboard from './pages/Dashboard.jsx'
+import SearchResults from './pages/SearchResults.jsx'
+
 const router = createBrowserRouter([
         {
                 path: '/',
@@ -27,6 +29,10 @@ const router = createBrowserRouter([
                         {
                                 path: '/Dashboard',
                                 element: <Dashboard />
+                        },
+                        {
+                                path: '/SearchResults',
+                                element: <SearchResults />
                         },
 
                 ],

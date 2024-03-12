@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import questimg from '../imgs/CQ-img.jpeg';
 
@@ -137,6 +138,48 @@ const ThoughtBubbleCard = styled.div`
 `;
 
 const Home = () => {
+  // State variables to hold the search query
+  const [searchQuery, setSearchQuery] = useState('');
+  
+  // Function to handle change in search input
+  const handleInputChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleSearch = async () => {
+    try {
+      // Perform search action using the searchQuery state
+      const quests = await searchQuestsByCity(searchQuery);
+      console.log('Search results:', quests);
+      // Update state or perform further actions with the fetched data
+    } catch (error) {
+      console.error('Error searching quests:', error);
+    }
+  };
+  
+  const searchQuestsByCity = async (city) => {
+    const { Quest, QuestLocation, QuestItems } = require('../../../server/models');
+
+    try {
+      // Query quests based on the city name
+      const quests = await Quest.findAll({
+        include: [
+          {
+            model: QuestLocation,
+            where: { questLocation: city }
+          },
+          {
+            model: QuestItems
+          }
+        ]
+      });
+      return quests;
+    } catch (error) {
+      console.error('Error searching quests:', error);
+      throw new Error('Error searching quests');
+    }
+  };
+
   return (
     <Container className="my-auto py-4">
       <LogoSection className="d-flex justify-content-center">
@@ -147,7 +190,7 @@ const Home = () => {
         />
       </LogoSection>
       <SearchSection>
-        <Form action="/" method="GET" role="search">
+        <Form>
           <Search>
             <SearchIcon>
               <svg
@@ -158,14 +201,17 @@ const Home = () => {
                 <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
               </svg>
             </SearchIcon>
-            <SearchInput type="text" />
+            <SearchInput
+              type="text"
+              value={searchQuery}
+              onChange={handleInputChange}
+            />
           </Search>
+          <ButtonSection>
+            <button type="button" onClick={handleSearch}>Search</button>
+          </ButtonSection>
         </Form>
-        <ButtonSection>
-          <button>Search</button>
-        </ButtonSection>
       </SearchSection>
-      {/* Section for brief directions */}
       <ThoughtBubbleCard>
         <p>
           Type the name of a city in the search bar to find Culinary quests in
