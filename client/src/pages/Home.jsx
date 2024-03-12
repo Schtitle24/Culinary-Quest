@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import questimg from '../imgs/CQ-img.jpeg'
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  
 `;
 
 const LogoSection = styled.div`
@@ -124,8 +126,10 @@ const Home = () => {
     <Container className='my-auto'>
       <LogoSection>
         <img
-          src=''
-          alt=''
+          src={questimg}
+          alt='quest-img'
+          className='img-responsive h-full w-250 object-cover rounded-20'
+
         />
       </LogoSection>
       <SearchSection>
@@ -141,8 +145,8 @@ const Home = () => {
               </svg>
             </SearchIcon>
             <SearchInput type='text' />
-            
-        
+
+
           </Search>
         </Form>
         <ButtonSection>

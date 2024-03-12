@@ -5,10 +5,12 @@
   font-family: sans-serif;
 }
 .container {
-  width: 100vw;
-  min-height: 100vh; /* Uncomment this line */
-  background: #EAE7B1;
+  
+  width: 100vw ;
+  min-height: 100vh;
+  background: #EAE7B1 !important;
   border: transparent;
+  overflow: auto;
 }
 
 

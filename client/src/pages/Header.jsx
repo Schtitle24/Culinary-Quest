@@ -23,11 +23,21 @@ const Button = styled.button`
 
 function Header() {
     return (
-        <div className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: '#065446', color: '#EAE7B1', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <h1 className="navbar-brand" style={{ color: '#EAE7B1', fontSize: '24px', fontWeight: 'bold' }}>Culinary Quest</h1>
+        <div className="navbar navbar-expand-lg navbar-light" style={{ 
+          backgroundColor: '#065446', 
+          color: '#EAE7B1', 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center' 
+          }}>
+            <h1 className="navbar-brand" style={{ 
+              color: '#EAE7B1', 
+              fontSize: '24px', 
+              fontWeight: 'bold' 
+              }}>Culinary Quest</h1>
             <ButtonSection>
-                <Button>Sign Up</Button>
-                <Button>Login</Button>
+                <Button><Link to="/AuthPage">Sign Up</Link></Button>
+                <Button><Link to="/AuthPage">Login</Link></Button>
             </ButtonSection>
         </div>
     );

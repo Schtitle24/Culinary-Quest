@@ -1,5 +1,5 @@
 const { faker } = require('@faker-js/faker');
-const { User, QuestLog, Quest, QuestLocation, QuestItems } = require('../models');
+const { User, QuestLog, Quest, QuestJunction, QuestLocation, QuestItems } = require('../models');
 const db = require('../models');
 
 let userIdCounter = 1;
@@ -47,6 +47,11 @@ const seedDatabase = async () => {
       quest_id: quest.quest_id,
     });
   }
+  
+  await QuestJunction.create({
+    quest_id: quest.quest_id,
+    quest_location_id: questLocation.quest_location_id,
+  })
 
   console.log('Database seeded successfully!');
 };
