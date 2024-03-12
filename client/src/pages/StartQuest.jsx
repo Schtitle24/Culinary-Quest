@@ -117,5 +117,6 @@ const StartQuest = () => {
    </CenteredContainer>
  );
 };
+
 export default StartQuest;
 
