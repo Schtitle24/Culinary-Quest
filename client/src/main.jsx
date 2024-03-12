@@ -8,6 +8,7 @@ import Home from "./pages/Home.jsx"
 import StartQuest from './pages/StartQuest.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import SearchResults from './pages/SearchResults.jsx'
+import SingleQuest from './components/SingleQuest.jsx'
 
 const router = createBrowserRouter([
         {

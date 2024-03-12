@@ -56,7 +56,7 @@ type QuestLog {
     questCard(city: String!,): [QuestCard]
   }
   type Mutation {
-    addUser(username: String!, email: String!, password: String!): User
+    addUser(username: String!, email: String!, password: String!): Auth
     updateUser(user_id: Int!, username: String!, email: String!, password: String!): User
     deleteUser(user_id: Int!): User
     login(email: String!, password: String!): Auth
