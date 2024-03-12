@@ -140,7 +140,8 @@ const ThoughtBubbleCard = styled.div`
 const Home = () => {
   // State variables to hold the search query
   const [searchQuery, setSearchQuery] = useState('');
-  
+  // const history = useHistory();
+
   // Function to handle change in search input
   const handleInputChange = (event) => {
     setSearchQuery(event.target.value);
@@ -151,7 +152,8 @@ const Home = () => {
       // Perform search action using the searchQuery state
       const quests = await searchQuestsByCity(searchQuery);
       console.log('Search results:', quests);
-      // Update state or perform further actions with the fetched data
+      // Navigate to the search results page and pass the quests as a parameter
+      history.push('/search-results', { quests: quests });
     } catch (error) {
       console.error('Error searching quests:', error);
     }
@@ -159,7 +161,7 @@ const Home = () => {
   
   const searchQuestsByCity = async (city) => {
     const { Quest, QuestLocation, QuestItems } = require('../../../server/models');
-
+  
     try {
       // Query quests based on the city name
       const quests = await Quest.findAll({
