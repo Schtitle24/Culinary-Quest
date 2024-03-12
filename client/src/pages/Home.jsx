@@ -137,6 +137,19 @@ const ThoughtBubbleCard = styled.div`
 `;
 
 const Home = () => {
+  const [searchCity, setSearchCity] = useState('');
+
+  const handleInputChange = (event) => {
+    setSearchCity(event.target.value);
+  };
+
+  const handleSearch = () => {
+    // Here you can implement your search functionality using the searchCity state
+    console.log('Search city:', searchCity);
+    // You can filter your data based on the entered city name
+    // Example: const filteredData = yourData.filter(item => item.city === searchCity);
+    // Then you can update the UI with the filtered data
+  };
   return (
     <Container className="my-auto py-4">
       <LogoSection className="d-flex justify-content-center">
