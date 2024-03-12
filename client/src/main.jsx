@@ -4,13 +4,10 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import App from './App.jsx'
 import AuthPage from "./pages/AuthPage.jsx"
 import Home from "./pages/Home.jsx"
+// import NavBar from "./components/NavBar.jsx"
 import StartQuest from './pages/StartQuest.jsx'
 import Dashboard from './pages/Dashboard.jsx'
-
-import SingleQuest from './pages/SingleQuest.jsx'
-
 import SearchResults from './pages/SearchResults.jsx'
-
 
 const router = createBrowserRouter([
         {
@@ -35,11 +32,14 @@ const router = createBrowserRouter([
                                 element: <Dashboard />
                         },
                         {
+
                           path: '/SingleQuest',
                           element: <SingleQuest />
                   },
 
-                                path: '/SearchResults',
+                           {    path: '/SearchResults',
+
+                          
                                 element: <SearchResults />
                         },
 
