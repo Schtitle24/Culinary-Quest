@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import NavBarIcon from '../imgs/NavBarIcon.jpeg'; // Import your dropdown icon image
+import NavBarIcon from '../imgs/NavBarIcon.jpeg'; 
 
 // Define the Mystery Quest font style
 const mysteryQuestFont = `
@@ -61,23 +61,24 @@ const Button = styled.button`
 `;
 
 const DropdownButton = styled(Button)`
-  background-image: url(${NavBarIcon}); // Use the dropdown icon image as background
+  background-image: url(${NavBarIcon}); 
   background-size: cover;
   background-position: center;
-  width: 30px; // Increase width for a bigger icon
-  height: 30px; // Increase height for a bigger icon
-  border-radius: 50%; // Make it rounded
+  width: 30px; 
+  height: 30px; 
+  border-radius: 50%; 
 `;
 
 const DropdownMenu = styled.div`
-  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')}; // Hide the menu by default
+  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')}; 
   position: absolute;
-  top: 100%; // Position below the button
+  top: 100%; 
   right: 0;
-  background-color: #D0CB92; // Set the background color
+  background-color: #D0CB92; 
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   z-index: 1;
 `;
+
 
 const DropdownMenuItem = styled.div`
   padding: 10px;
