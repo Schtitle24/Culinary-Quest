@@ -12,11 +12,13 @@ const seedDatabase = async () => {
   await db.sequelize.sync({ force: true });
 
   // Create a user
+  const pass = faker.internet.password()
+
   const user = await User.create({
     user_id: userIdCounter++,
     username: faker.internet.userName(),
     email: faker.internet.email(),
-    password: faker.internet.password(),
+    password: pass,
   });
 
   // Create a quest log for the user
