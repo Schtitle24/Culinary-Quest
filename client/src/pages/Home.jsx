@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import questimg from '../imgs/CQ-img.jpeg';
 
@@ -135,21 +136,22 @@ const ThoughtBubbleCard = styled.div`
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 `;
-
 const Home = () => {
-  const [searchCity, setSearchCity] = useState('');
+  // State variables to hold the search query
+  const [searchQuery, setSearchQuery] = useState('');
 
+  // Function to handle change in search input
   const handleInputChange = (event) => {
-    setSearchCity(event.target.value);
+    setSearchQuery(event.target.value);
   };
+
 
   const handleSearch = () => {
-    // Here you can implement your search functionality using the searchCity state
-    console.log('Search city:', searchCity);
-    // You can filter your data based on the entered city name
-    // Example: const filteredData = yourData.filter(item => item.city === searchCity);
-    // Then you can update the UI with the filtered data
+    // Perform search action using the searchQuery state
+    // Implement your search logic here
+    console.log('Search query:', searchQuery);
   };
+
   return (
     <Container className="my-auto py-4">
       <LogoSection className="d-flex justify-content-center">
@@ -160,7 +162,7 @@ const Home = () => {
         />
       </LogoSection>
       <SearchSection>
-        <Form action="/" method="GET" role="search">
+        <Form>
           <Search>
             <SearchIcon>
               <svg
@@ -171,14 +173,17 @@ const Home = () => {
                 <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
               </svg>
             </SearchIcon>
-            <SearchInput type="text" />
+            <SearchInput
+              type="text"
+              value={searchQuery}
+              onChange={handleInputChange}
+            />
           </Search>
+          <ButtonSection>
+            <button type="button" onClick={handleSearch}>Search</button>
+          </ButtonSection>
         </Form>
-        <ButtonSection>
-          <button>Search</button>
-        </ButtonSection>
       </SearchSection>
-      {/* Section for brief directions */}
       <ThoughtBubbleCard>
         <p>
           Type the name of a city in the search bar to find Culinary quests in
