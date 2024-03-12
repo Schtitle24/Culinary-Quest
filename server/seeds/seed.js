@@ -27,19 +27,20 @@ const seedDatabase = async () => {
     user_id: user.user_id,
   });
 
+  // Create a quest location
+  const questLocation = await QuestLocation.create({
+    quest_location_id: questLocationIdCounter++,
+    quest_location: faker.location.city(),
+  });
+
   // Create a quest for the quest log
   const quest = await Quest.create({
     quest_id: questIdCounter++,
     questName: faker.lorem.words(3),
     questDescription: faker.lorem.paragraph(), // Adding description
     quest_log_id: questLog.quest_log_id,
-  });
-
-  // Create a quest location
-  const questLocation = await QuestLocation.create({
-    quest_location_id: questLocationIdCounter++,
-    questLocation: faker.location.city(),
-  });
+    quest_location_id: questLocation.quest_location_id,
+  });  
 
   // Create 10 quest items for the quest
   for (let i = 0; i < 10; i++) {
