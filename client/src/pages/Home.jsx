@@ -136,20 +136,48 @@ const ThoughtBubbleCard = styled.div`
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 `;
+
 const Home = () => {
   // State variables to hold the search query
   const [searchQuery, setSearchQuery] = useState('');
-
+  
   // Function to handle change in search input
   const handleInputChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
+  const handleSearch = async () => {
+    try {
+      // Perform search action using the searchQuery state
+      const quests = await searchQuestsByCity(searchQuery);
+      console.log('Search results:', quests);
+      // Update state or perform further actions with the fetched data
+    } catch (error) {
+      console.error('Error searching quests:', error);
+    }
+  };
+  
+  const searchQuestsByCity = async (city) => {
+    const { Quest, QuestLocation, QuestItems } = require('../../../server/models');
 
-  const handleSearch = () => {
-    // Perform search action using the searchQuery state
-    // Implement your search logic here
-    console.log('Search query:', searchQuery);
+    try {
+      // Query quests based on the city name
+      const quests = await Quest.findAll({
+        include: [
+          {
+            model: QuestLocation,
+            where: { questLocation: city }
+          },
+          {
+            model: QuestItems
+          }
+        ]
+      });
+      return quests;
+    } catch (error) {
+      console.error('Error searching quests:', error);
+      throw new Error('Error searching quests');
+    }
   };
 
   return (
