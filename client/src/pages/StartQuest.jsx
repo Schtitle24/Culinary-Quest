@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 // import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -116,4 +117,6 @@ const StartQuest = () => {
    </CenteredContainer>
  );
 };
+
 export default StartQuest;
+

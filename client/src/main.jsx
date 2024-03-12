@@ -6,8 +6,6 @@ import AuthPage from "./pages/AuthPage.jsx"
 import Home from "./pages/Home.jsx"
 import StartQuest from './pages/StartQuest.jsx'
 import Dashboard from './pages/Dashboard.jsx'
-
-
 const router = createBrowserRouter([
         {
                 path: '/',
@@ -33,12 +31,10 @@ const router = createBrowserRouter([
 
                 ],
         },
+
 ]);
 ReactDOM.createRoot(document.getElementById('root')).render(
-        <RouterProvider router={router} />
+  <RouterProvider router={router} />
 )
-
-
-
 
 
