@@ -79,12 +79,12 @@ const resolvers = {
     },
   },
   Mutation: {
-    // add a new user
+    // Add user mutation resolver
     addUser: async (_, { username, email, password }) => {
       return User.create({ username, email, password });
     },
 
-    //update an existing user
+    // Update user mutation resolver
     updateUser: async (_, { user_id, username, email, password }) => {
       const user = await User.findByPk(user_id);
       if (!user) {
@@ -97,7 +97,7 @@ const resolvers = {
       return user;
     },
 
-    //delete a user
+    // Delete user mutation resolver
     deleteUser: async (_, { user_id }) => {
       const user = await User.findByPk(user_id);
       if (!user) {
@@ -107,12 +107,109 @@ const resolvers = {
       return user;
     },
 
-    //add a new quest
+    // Add quest log mutation resolver
+    addQuestLog: async (_, { user_id }) => {
+      return QuestLog.create({ user_id });
+    },
+
+    // Update quest log mutation resolver
+    updateQuestLog: async (_, { quest_log_id, user_id, completionDate }) => {
+      const questLog = await QuestLog.findByPk(quest_log_id);
+      if (!questLog) {
+        throw new Error('Quest log not found');
+      }
+      questLog.user_id = user_id;
+      questLog.completionDate = completionDate;
+      await questLog.save();
+      return questLog;
+    },
+
+    // Delete quest log mutation resolver
+    deleteQuestLog: async (_, { quest_log_id }) => {
+      const questLog = await QuestLog.findByPk(quest_log_id);
+      if (!questLog) {
+        throw new Error('Quest log not found');
+      }
+      await questLog.destroy();
+      return questLog;
+    },
+
+    // Add quest location mutation resolver
+    addQuestLocation: async (_, { questLocation }) => {
+      return QuestLocation.create({ questLocation });
+    },
+
+    // Update quest location mutation resolver
+    updateQuestLocation: async (_, { quest_location_id, questLocation }) => {
+      const questLocationInstance = await QuestLocation.findByPk(quest_location_id);
+      if (!questLocationInstance) {
+        throw new Error('Quest location not found');
+      }
+      questLocationInstance.questLocation = questLocation;
+      await questLocationInstance.save();
+      return questLocationInstance;
+    },
+
+    // Delete quest location mutation resolver
+    deleteQuestLocation: async (_, { quest_location_id }) => {
+      const questLocationInstance = await QuestLocation.findByPk(quest_location_id);
+      if (!questLocationInstance) {
+        throw new Error('Quest location not found');
+      }
+      await questLocationInstance.destroy();
+      return questLocationInstance;
+    },
+
+    // Add quest junction mutation resolver currently not working
+    addQuestJunction: async (_, { questId, questLocationId }) => {
+      console.log( {questId, questLocationId});
+      return QuestJunction.create({ quest_id: questId, quest_location_id: questLocationId });
+      
+    },
+
+    // Delete quest junction mutation resolver
+    deleteQuestJunction: async (_, { quest_id, quest_location_id }) => {
+      const deletedCount = await QuestJunction.destroy({
+        where: { quest_id, quest_location_id }
+      });
+      if (deletedCount === 0) {
+        throw new Error('Quest junction not found');
+      }
+      return { quest_id, quest_location_id };
+    },
+
+    // Add quest items mutation resolver
+    addQuestItems: async (_, { itemName, quest_id }) => {
+      return QuestItems.create({ itemName, quest_id });
+    },
+
+    // Update quest items mutation resolver
+    updateQuestItems: async (_, { quest_item_id, itemName }) => {
+      const questItems = await QuestItems.findByPk(quest_item_id);
+      if (!questItems) {
+        throw new Error('Quest items not found');
+      }
+      questItems.itemName = itemName;
+      await questItems.save();
+      return questItems;
+    },
+
+    // Delete quest items mutation resolver
+    deleteQuestItems: async (_, { quest_item_id }) => {
+      const questItems = await QuestItems.findByPk(quest_item_id);
+      if (!questItems) {
+        throw new Error('Quest items not found');
+      }
+      await questItems.destroy();
+      return questItems;
+    },
+
+    // Add quest mutation resolver
     addQuest: async (_, { questName, questDescription, quest_log_id }) => {
       return Quest.create({ questName, questDescription, quest_log_id });
     },
 
-    //update an existing quest
+    // Update quest mutation resolver
     updateQuest: async (_, { quest_id, questName, questDescription, quest_log_id }) => {
       const quest = await Quest.findByPk(quest_id);
       if (!quest) {
@@ -125,7 +222,7 @@ const resolvers = {
       return quest;
     },
 
-    //delete a quest
+    // Delete quest mutation resolver
     deleteQuest: async (_, { quest_id }) => {
       const quest = await Quest.findByPk(quest_id);
       if (!quest) {
@@ -134,8 +231,6 @@ const resolvers = {
       await quest.destroy();
       return quest;
     },
-
-    
   },
 };
 
