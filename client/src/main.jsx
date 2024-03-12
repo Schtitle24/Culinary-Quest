@@ -4,32 +4,34 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import App from './App.jsx'
 import AuthPage from "./pages/AuthPage.jsx"
 import Home from "./pages/Home.jsx"
-
 import StartQuest from './pages/StartQuest.jsx'
+import Dashboard from './pages/Dashboard.jsx'
 const router = createBrowserRouter([
-  {
-    path: '/', //sets landing page and base url
-    element: <App />,
-    errorElement: <h1 className='display-2'>Wrong page!</h1>,
-    children: [
-      {
-        index: true,
-        element: <Home />
-      },
-      {
-        path: '/AuthPage',
-        element: <AuthPage />
-      },
-    //   {
-    //     path: '/SingleQuest',
-    //     element: <SingleQuest />
-    //   },
-    {
-        path: '/StartQuest',
-        element: <StartQuest />
-      },
-    ],
-  },
+        {
+                path: '/',
+                element: <App />,
+                errorElement: <h1 className='display-2'>Wrong page!</h1>,
+                children: [
+                        {
+                                index: true,
+                                element: <Home />
+                        },
+                        {
+                                path: '/AuthPage',
+                                element: <AuthPage />
+                        },
+                        {
+                                path: '/StartQuest',
+                                element: <StartQuest />
+                        },
+                        {
+                                path: '/Dashboard',
+                                element: <Dashboard />
+                        },
+
+                ],
+        },
+
 ]);
 ReactDOM.createRoot(document.getElementById('root')).render(
   <RouterProvider router={router} />
