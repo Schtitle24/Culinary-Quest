@@ -207,6 +207,7 @@ const Home = () => {
               type="text"
               value={searchQuery}
               onChange={handleInputChange}
+              placeholder='Enter city name ...'
             />
           </Search>
           <ButtonSection>
