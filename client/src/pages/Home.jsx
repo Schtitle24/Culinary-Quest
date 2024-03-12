@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import questimg from '../imgs/CQ-img.jpeg'
+import questimg from '../imgs/CQ-img.jpeg';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  
+  align-items: center; 
+  justify-content: center; 
 `;
 
 const LogoSection = styled.div`
@@ -56,16 +57,17 @@ const ButtonSection = styled.div`
 
   button {
     background-color: #065446;
+    background-image: linear-gradient(to right, #3C6255 0%, #61876E 100%);
     border: 1px solid #f8f9fa;
     border-radius: 4px;
-    color: white;
+    color: #EAE7B1;
     font-family: Roboto, arial, sans-serif;
     font-size: 18px;
     margin: 11px 4px;
-    padding: 0 16px;
+    padding: 12 px;
     line-height: 27px;
     height: 36px;
-    min-width: 54px;
+    min-width: 80px;
     text-align: center;
     cursor: pointer;
     user-select: none;
@@ -102,57 +104,74 @@ const SearchInput = styled.input`
   font-size: 16px;
 `;
 
-const MicIcon = styled.div`
-  display: flex;
-  cursor: pointer;
-  align-items: center;
-  border: 0;
-  background: transparent;
-  outline: none;
-  padding: 0 8px;
-  width: 40px;
-  line-height: 44px;
-  height: 44px;
 
-  svg {
-    height: 24px;
-    width: 24px;
-    vertical-align: middle;
+const ThoughtBubbleCard = styled.div`
+  background-color: #f0f0f0;
+  color: #065446;
+  font-weight: bold;
+  border-radius: 20px;
+  padding: 20px;
+  max-width: 400px;
+  margin: 20px auto;
+  text-align: center;
+  position: relative;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  opacity: 0.8; 
+
+  
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    background-color: #f0f0f0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    transform: translateX(-50%) rotate(45deg);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 `;
 
 const Home = () => {
   return (
-    <Container className='my-auto'>
-      <LogoSection>
+    <Container className="my-auto py-4">
+      <LogoSection className="d-flex justify-content-center">
         <img
           src={questimg}
-          alt='quest-img'
-          className='img-responsive h-full w-250 object-cover rounded-20'
-
+          alt="quest-img"
+          className="img-responsive h-100 w-250 object-cover rounded-3"
         />
       </LogoSection>
       <SearchSection>
-        <Form action='/' method='GET' role='search'>
+        <Form action="/" method="GET" role="search">
           <Search>
             <SearchIcon>
               <svg
-                focusable='false'
-                xmlns='http://www.w3.org/2000/svg'
-                viewBox='0 0 24 24'
+                focusable="false"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
               >
-                <path d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z' />
+                <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
               </svg>
             </SearchIcon>
-            <SearchInput type='text' />
-
-
+            <SearchInput type="text" />
           </Search>
         </Form>
         <ButtonSection>
-          <button> Search</button>
+          <button>Search</button>
         </ButtonSection>
       </SearchSection>
+      {/* Section for brief directions */}
+      <ThoughtBubbleCard>
+        <p>
+          Type the name of a city in the search bar to find Culinary quests in
+          that location!
+        </p>
+      </ThoughtBubbleCard>
     </Container>
   );
 };
