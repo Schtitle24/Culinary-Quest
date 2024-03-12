@@ -78,34 +78,34 @@ const resolvers = {
       };
     },
   },
-    // questCard: async (_, { quest_id }) => {
-    //   // Find the quest junction associated with the given quest ID
-    //   const questJunction = await QuestJunction.findOne({ where: { questId: quest_id },   
-    //      include: [
-    //     { model: QuestLocation }, 
-    //     { model: Quest, 
-    //       include: [
-    //         { model: QuestItems },
-    //         { model: QuestLog, 
-    //         include: [
-    //           {model: User}
-    //         ]}
-    //       ]}, 
-    //   ]
-    //   });
-    //   if (!questJunction) {
-    //     throw new Error('Quest junction not found');
-    //   }
-    //   console.log('questJunction:', questJunction);
+     questCard: async (_, { quest_id }) => {
+     // Find the quest junction associated with the given quest ID
+     const questJunction = await QuestJunction.findOne({ where: { questId: quest_id },   
+        include: [
+       { model: QuestLocation }, 
+     { model: Quest, 
+       include: [
+        { model: QuestItems },
+      { model: QuestLog, 
+     include: [
+        {model: User}
+       ]}
+          ]}, 
+      ]
+      });
+      if (!questJunction) {
+        throw new Error('Quest junction not found');
+     }
+      console.log('questJunction:', questJunction);
 
-    //   return {
-    //     username: questLog.User.username,
-    //     questName: quest.questName,
-    //     questLocation: quest.QuestLocation.questLocation,
-    //     description: quest.questDescription,
-    //   };
-    // },
-  // },
+      return {
+        username: questLog.User.username,
+       questName: quest.questName,
+        questLocation: quest.QuestLocation.questLocation,
+      description: quest.questDescription,
+    };
+     },
+   },
 // console log quest junction, create try block for quest card and do not bring a new error. 
   Mutation: {
     // add a new user
@@ -166,6 +166,6 @@ const resolvers = {
 
     
   },
-};
+;
 
 module.exports = resolvers;
