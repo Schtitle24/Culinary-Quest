@@ -11,7 +11,7 @@ QuestLocation.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    questLocation: {
+    quest_location: {
       type: DataTypes.STRING,
       allowNull: false,
     },

@@ -27,6 +27,14 @@ Quest.init(
         key: 'quest_log_id', 
       },
     },
+    quest_location_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'QuestLocation', 
+        key: 'quest_location_id', 
+      },
+    },
   },
   {
     sequelize,

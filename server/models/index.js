@@ -17,8 +17,8 @@ Quest.belongsTo(QuestLog, { foreignKey: 'quest_log_id' });
 Quest.hasMany(QuestItems, { foreignKey: 'quest_id' });
 QuestItems.belongsTo(Quest, { foreignKey: 'quest_id' });
 
-Quest.belongsToMany(QuestLocation, { through: QuestJunction, foreignKey: 'quest_id' });
-QuestLocation.belongsToMany(Quest, { through: QuestJunction, foreignKey: 'quest_location_id' });
+Quest.hasOne(QuestLocation, { foreignKey: 'quest_location_id' });
+QuestLocation.hasMany(Quest, { foreignKey: 'quest_location_id' });
 
 module.exports = {
   sequelize,
