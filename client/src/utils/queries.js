@@ -46,4 +46,29 @@ export const QUERY_ITEMS = gql`
       quest_item_id
     }
   }
-`
+`;
+
+export const QUERY_LOG = gql`
+questLog(quest_log_id: $questLogId) {
+  quest_log_id
+  user_id
+  }
+}
+`;
+
+export const QUERY_LOCATION = gql`
+questLocation(quest_location_id: $questLocationId) {
+  questLocation
+  quest_location_id
+  }
+}
+`;
+
+export const QUERY_JUNCTION = gql`
+
+questJunction(questLocationId: $questLocationId, questId: $questId) {
+  quest_id
+  quest_location_id
+  }
+}
+`;
