@@ -1,47 +1,35 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { ADD_QUEST, ADD_LOCATION, ADD_ITEMS } from '../utils/mutations';
-import { useMutation } from "@apollo/client"
+import { ADD_QUEST, ADD_ITEMS } from '../utils/mutations';
+import { useMutation } from "@apollo/client";
 
 // Styled components
 const CenteredContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* height: 100vh; Remove this line */
 `;
-const Container = styled.div`
-  margin-top: 5rem;
-`;
-const CenteredInputContainer = styled.div`
+
+const FormContainer = styled.form`
+  width: 80%; /* Adjust the width as needed */
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 `;
-const SearchInput = styled.input`
+
+const InputField = styled.input`
   width: 100%;
   margin-bottom: 1rem;
   padding: 0.5rem;
 `;
-const Column = styled.div`
-  flex: 1;
-`;
-const Row = styled.div`
-  display: flex;
-  align-items: center;
-  border: 1px solid #ccc;
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
-`;
-const InputField = styled.input`
-  flex: 1;
-  margin-left: 0.5rem;
-`;
-const DescriptionInput = styled.textarea`
+
+const TextArea = styled.textarea`
   width: 100%;
   margin-top: 1rem;
+  margin-bottom: 1rem; /* Add margin bottom for spacing */
   padding: 0.5rem;
 `;
+
 const SubmitButton = styled.button`
   margin-top: 1rem;
   padding: 0.5rem 2rem;
@@ -49,68 +37,89 @@ const SubmitButton = styled.button`
 
 const StartQuest = () => {
   const [formData, setFormData] = useState({
-    search: '',
-    inputs: Array.from({ length: 7 }).fill(''),
-    description: ''
+    questName: '',
+    questLocation: '',
+    questItems: Array.from({ length: 7 }).fill(''),
+    questDescription: ''
   });
 
-  const handleInputChange = (e, index) => {
-    const newInputs = [...formData.inputs];
-    newInputs[index] = e.target.value;
-    setFormData({ ...formData, inputs: newInputs });
+  const [addQuest] = useMutation(ADD_QUEST);
+  const [addItems] = useMutation(ADD_ITEMS);
+
+  const handleInputChange = (e, field) => {
+    setFormData({ ...formData, [field]: e.target.value });
   };
 
-  const handleDescriptionChange = (e) => {
-    setFormData({ ...formData, description: e.target.value });
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const handleSubmit = () => {
-    const card = {
-      search: formData.search,
-      inputs: formData.inputs,
-      description: formData.description
-    };
-    console.log(card);
-    window.location.assign("/SingleQuest");
+    // Create the quest
+    const { data: { addQuest: { id: questId } } } = await addQuest({
+      variables: {
+        questName: formData.questName,
+        questLocation: formData.questLocation,
+        questDescription: formData.questDescription
+      }
+    });
+
+    // Create the items
+    for (const itemName of formData.questItems) {
+      await addItems({
+        variables: {
+          itemName,
+          questId
+        }
+      });
+    }
+
+    // Reset form data after submission
+    setFormData({
+      questName: '',
+      questLocation: '',
+      questItems: Array.from({ length: 7 }).fill(''),
+      questDescription: ''
+    });
   };
 
   return (
     <CenteredContainer>
-      <Container className="container">
-        <CenteredInputContainer>
-          <SearchInput
+      <FormContainer onSubmit={handleSubmit}>
+        <InputField
+          type="text"
+          placeholder="Quest Name"
+          value={formData.questName}
+          onChange={(e) => handleInputChange(e, 'questName')}
+        />
+        <InputField
+          type="text"
+          placeholder="Quest Location"
+          value={formData.questLocation}
+          onChange={(e) => handleInputChange(e, 'questLocation')}
+        />
+        {formData.questItems.map((item, index) => (
+          <InputField
+            key={index}
             type="text"
-            className="form-control mb-3"
-            placeholder="Search Your City"
-            value={formData.search}
-            onChange={(e) => setFormData({ ...formData, search: e.target.value })}
+            placeholder={`Quest Item ${index + 1}`}
+            value={item}
+            onChange={(e) => {
+              const newItems = [...formData.questItems];
+              newItems[index] = e.target.value;
+              setFormData({ ...formData, questItems: newItems });
+            }}
           />
-        </CenteredInputContainer>
-        <Column className="col">
-          {formData.inputs.map((input, index) => (
-            <Row className="row" key={index}>
-              <InputField
-                type="text"
-                placeholder={`Input ${index + 1}`}
-                value={input}
-                onChange={(e) => handleInputChange(e, index)}
-              />
-            </Row>
-          ))}
-          <CenteredInputContainer>
-            <DescriptionInput
-              placeholder="Description"
-              value={formData.description}
-              onChange={handleDescriptionChange}
-            />
-          </CenteredInputContainer>
-        </Column>
-        <CenteredInputContainer>
-          <SubmitButton type="submit" onClick={handleSubmit}>Submit</SubmitButton>
-        </CenteredInputContainer>
-      </Container>
+        ))}
+        <TextArea
+          placeholder="Quest Description"
+          value={formData.questDescription}
+          onChange={(e) => handleInputChange(e, 'questDescription')}
+        />
+        <SubmitButton type="submit">Submit</SubmitButton>
+      </FormContainer>
     </CenteredContainer>
   );
 };
 
 export default StartQuest;
+
+
