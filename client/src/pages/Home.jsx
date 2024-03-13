@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import questimg from '../imgs/CQ-img.jpeg';
-
+import { useLazyQuery } from '@apollo/client'
+import { QUERY_QUESTS } from '../utils/queries';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -138,6 +139,7 @@ const ThoughtBubbleCard = styled.div`
 `;
 
 const Home = () => {
+  const [queryQuests, {data, error, loading}] = useLazyQuery(QUERY_QUESTS)
   // State variables to hold the search query
   const [searchQuery, setSearchQuery] = useState('');
   // const history = useHistory();
@@ -160,26 +162,7 @@ const Home = () => {
   };
   
   const searchQuestsByCity = async (city) => {
-    const { Quest, QuestLocation, QuestItems } = require('../../../server/models');
-  
-    try {
-      // Query quests based on the city name
-      const quests = await Quest.findAll({
-        include: [
-          {
-            model: QuestLocation,
-            where: { questLocation: city }
-          },
-          {
-            model: QuestItems
-          }
-        ]
-      });
-      return quests;
-    } catch (error) {
-      console.error('Error searching quests:', error);
-      throw new Error('Error searching quests');
-    }
+    const { data } = await queryQuests()
   };
 
   return (
@@ -216,10 +199,10 @@ const Home = () => {
         </Form>
       </SearchSection>
       <ThoughtBubbleCard>
-        <p>
+        {data ? (<>{data?.quests.map((item) => <div><h2>{item.questName}</h2><p>{item.questDescription}</p></div>)}</>) : <p>
           Type the name of a city in the search bar to find Culinary quests in
           that location!
-        </p>
+        </p>}
       </ThoughtBubbleCard>
     </Container>
   );
