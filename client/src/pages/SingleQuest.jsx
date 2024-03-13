@@ -80,7 +80,7 @@ const SingleQuest = () => {
         </Section>
         <Section>
           <SectionTitle bold><strong>Username</strong></SectionTitle> {/* Bolded Username */}
-          <SubTitle>JohnDoe123</SubTitle>
+          <SubTitle>Harry Mcfarry</SubTitle>
         </Section>
         <Section>
           <SectionTitle>Restaurants & Food Items</SectionTitle>
