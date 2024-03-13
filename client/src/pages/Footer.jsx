@@ -9,12 +9,9 @@ const FooterContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 20px 40px;
-
-  @media screen and (max-width: 583px) {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+  
+  bottom: 0;
+  width: 100%;
 `;
 
 const FooterButtonSection = styled.div`
@@ -47,9 +44,11 @@ const FooterButton = styled.a`
     background-color: #D0CB92;
   }
 
-  @media screen and (max-width: 583px) {
-    margin: 8px;
-  }
+  @media screen and (max-width: 320px) {
+    font-size: 36px;
+    padding: 10px;
+   
+}
 `;
 
 const FooterHeading = styled.h1`
