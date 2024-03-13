@@ -24,7 +24,7 @@ const SectionTitle = styled.h2`
   font-size: 20px;
   text-align: center;
   margin-bottom: 10px;
-  font-weight: bold;
+  font-weight: ${(props) => (props.bold ? 'bold' : 'normal')}; /* Added font-weight */
 `;
 
 const SubTitle = styled.p`
@@ -48,15 +48,15 @@ const TextInput = styled.input`
 `;
 
 // Component
-const QuestCardList = () => {
+const SingleQuest = () => {
   const [restaurantData, setRestaurantData] = useState([
-    { name: 'Restaurant A', food: 'Pizza', checked: false },
-    { name: 'Restaurant B', food: 'Burger', checked: false },
-    { name: 'Restaurant C', food: 'Sushi', checked: false },
-    { name: 'Restaurant D', food: 'Tacos', checked: false },
-    { name: 'Restaurant E', food: 'Pasta', checked: false },
-    { name: 'Restaurant F', food: 'Steak', checked: false },
-    { name: 'Restaurant G', food: 'Salad', checked: false },
+    { name: 'Bills Famous', food: 'Pizza and Wings', checked: false },
+    { name: 'Timmy Jims', food: 'BBQ Burger', checked: false },
+    { name: 'Ninja Warrior', food: 'Special Sushi', checked: false },
+    { name: 'Pancho Villas', food: 'Beef Tacos', checked: false },
+    { name: 'Sals Shop', food: ' Lamb Pasta', checked: false },
+    { name: 'Big Todds', food: ' 72 ounce Steak', checked: false },
+    { name: 'Little Susies', food: 'Sexy Salad', checked: false },
   ]);
 
   const handleInputChange = (index, field, value) => {
@@ -75,12 +75,12 @@ const QuestCardList = () => {
     <CenteredContainer>
       <CardContainer>
         <Section>
-          <SectionTitle>City Name</SectionTitle>
+          <SectionTitle bold><strong>City</strong></SectionTitle> {/* Bolded City */}
           <SubTitle>New York</SubTitle>
         </Section>
         <Section>
-          <SectionTitle>Username</SectionTitle>
-          <SubTitle>Harry McFarry</SubTitle>
+          <SectionTitle bold><strong>Username</strong></SectionTitle> {/* Bolded Username */}
+          <SubTitle>JohnDoe123</SubTitle>
         </Section>
         <Section>
           <SectionTitle>Restaurants & Food Items</SectionTitle>
@@ -111,7 +111,7 @@ const QuestCardList = () => {
   );
 };
 
-export default QuestCardList;
+export default SingleQuest;
 
 
 
