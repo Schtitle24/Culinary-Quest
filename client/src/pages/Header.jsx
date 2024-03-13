@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import NavBarIcon from '../imgs/NavBarIcon.jpeg'; 
-
+import NavBarIcon from '../imgs/NavBarIcon.jpeg'; // Import your dropdown icon image
+import Auth from '../utils/auth'
 // Define the Mystery Quest font style
 const mysteryQuestFont = `
   font-family: "Mystery Quest", system-ui;
@@ -121,6 +121,7 @@ function Header() {
             <ButtonSection>
                 <Button as={Link} to="/AuthPage">Sign Up</Button>
                 <Button as={Link} to="/AuthPage">Login</Button>
+                <Button onClick={Auth.logout}>Log Out</Button>
                 <div style={{ position: 'relative' }}>
                     <DropdownButton onClick={toggleDropdown} />
                     <DropdownMenu isOpen={isDropdownOpen}>
