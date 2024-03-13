@@ -1,7 +1,9 @@
-
 import React, { useState } from 'react';
 import styled from 'styled-components';
+// import { useHistory } from 'react-router-dom';
 import questimg from '../imgs/CQ-img.jpeg';
+import NavBarIcon from '../imgs/NavBarIcon.jpeg'
+import { useQuery, gql } from '@apollo/client';
 
 const Container = styled.div`
   display: flex;
@@ -113,15 +115,13 @@ const ThoughtBubbleCard = styled.div`
   border-radius: 20px;
   padding: 20px;
   max-width: 400px;
-  margin: 20px auto;
+  margin: 20px auto 40px; /* Added margin-bottom for spacing */
   text-align: center;
   position: relative;
   font-size: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   opacity: 0.8; 
-
   
-
   &::before {
     content: '';
     position: absolute;
@@ -129,56 +129,46 @@ const ThoughtBubbleCard = styled.div`
     left: 50%;
     width: 30px;
     height: 30px;
-    background-color: #f0f0f0;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-radius: 50%; /* Make the icon circular */
+    background-image: url(${NavBarIcon}); 
+    background-size: cover;
     transform: translateX(-50%) rotate(45deg);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 `;
+const SEARCH_QUESTS_BY_CITY = gql`
+  query SearchQuestsByCity($city: String!) {
+    questCard(city: $city) {
+      username
+      questName
+      quest_location
+      description
+    }
+  }
+`;
 
 const Home = () => {
-  // State variables to hold the search query
   const [searchQuery, setSearchQuery] = useState('');
   // const history = useHistory();
 
-  // Function to handle change in search input
+  const { loading, error, data } = useQuery(SEARCH_QUESTS_BY_CITY, {
+    variables: { city: searchQuery },
+  });
+
   const handleInputChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
   const handleSearch = async () => {
     try {
-      // Perform search action using the searchQuery state
-      const quests = await searchQuestsByCity(searchQuery);
-      console.log('Search results:', quests);
-      // Navigate to the search results page and pass the quests as a parameter
-      history.push('/search-results', { quests: quests });
-    } catch (error) {
-      console.error('Error searching quests:', error);
-    }
-  };
-  
-  const searchQuestsByCity = async (city) => {
-    const { Quest, QuestLocation, QuestItems } = require('../../../server/models');
-  
-    try {
-      // Query quests based on the city name
-      const quests = await Quest.findAll({
-        include: [
-          {
-            model: QuestLocation,
-            where: { questLocation: city }
-          },
-          {
-            model: QuestItems
-          }
-        ]
+      // Navigate to search results page with search query
+      history.push({
+        pathname: '/SearchResults',
+        search: `?city=${searchQuery}`,
+        state: { searchQuery }
       });
-      return quests;
     } catch (error) {
       console.error('Error searching quests:', error);
-      throw new Error('Error searching quests');
     }
   };
 
@@ -195,13 +185,7 @@ const Home = () => {
         <Form>
           <Search>
             <SearchIcon>
-              <svg
-                focusable="false"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
-              </svg>
+              {/* Search icon SVG */}
             </SearchIcon>
             <SearchInput
               type="text"
