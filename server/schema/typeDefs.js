@@ -79,6 +79,8 @@ type QuestLog {
     addQuest(questName: String!, questDescription: String!, quest_log_id: Int!, quest_location: String!): Quest
     updateQuest(quest_id: Int!, questName: String!, questDescription: String!, quest_log_id: Int!): Quest
     deleteQuest(quest_id: Int!): Quest
+
+    
   }
 `;
 

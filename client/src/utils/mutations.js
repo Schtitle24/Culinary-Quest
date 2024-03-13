@@ -193,12 +193,23 @@ mutation AddUser($username: String!, $email: String!, $password: String!) {
     email: $email,
     password: $password
   ) {
-    email
-    password
-    user_id
-    username
+    token
   }
 }
+`;
+
+
+
+export const LOGIN_USER = gql`
+mutation login( $email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+      user {
+        username
+        email
+      }
+    }
+  }
 `;
 
 export const DELETE_USER = gql`

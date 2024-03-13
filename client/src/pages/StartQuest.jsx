@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-
+import { ADD_QUEST, ADD_LOCATION, ADD_ITEMS } from '../utils/mutations';
+import {useMutation} from "@apollo/client"
 // Styled components
 const CenteredContainer = styled.div`
   display: flex;
@@ -33,11 +34,11 @@ const Row = styled.div`
   margin-bottom: 0.5rem;
 `;
 
-const InputField = styled.input`
+
+const InputField = styled.textarea`
   flex: 1;
   margin-left: 0.5rem;
 `;
-
 const DescriptionInput = styled.textarea`
   width: 100%;
   margin-top: 1rem;
@@ -52,29 +53,72 @@ const SubmitButton = styled.button`
 const StartQuest = () => {
   const [formData, setFormData] = useState({
     search: '',
-    inputs: Array.from({ length: 7 }).fill(''),
+    //inputs: Array.from({ length: 7 }).fill(''),
+    inputs: '',
+    //questName: "",
     description: ''
   });
+  const [addQuest] = useMutation(ADD_QUEST)
+  const [addQuestLocation] = useMutation(ADD_LOCATION)
+  const [addQuestItems] = useMutation(ADD_ITEMS)
+  // const handleInputChange = (e, index) => {
+  //   const newInputs = [...formData.inputs];
+  //   newInputs[index] = e.target.value;
+  //   setFormData({ ...formData, inputs: newInputs });
+  // };
 
-  const handleInputChange = (e, index) => {
-    const newInputs = [...formData.inputs];
-    newInputs[index] = e.target.value;
-    setFormData({ ...formData, inputs: newInputs });
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleDescriptionChange = (e) => {
     setFormData({ ...formData, description: e.target.value });
   };
 
-  const cardData = {
+  const handleFormSubmit = async (e) =>{
+    e.preventDefault()
+    const cardData = {
     search: formData.search,
     inputs: formData.inputs,
+    //questName: formData.questName,
     description: formData.description
   };
+  console.log(cardData)
+
+  const {location} = await addQuestLocation({
+    variables: {
+      questLocation: formData.search
+    }})
+
+  const {items} = await addQuestItems({
+    variables: {
+      itemName: formData.inputs, 
+      quest_id: 1 // to be replaced by real queried value
+    }
+  })
+
+  const {quest}= await addQuest({
+    variables: {
+    questName: "John's Quest", // to be replaced by real queried value
+    // questName: formData.questName
+    questDescription: formData.description, 
+    quest_log_id: 1 // to be replaced by real queried value
+  }
+  })
+  console.log(location, items, quest)
+
+  }
+ 
+  
+
+  
 
   return (
     <CenteredContainer>
+     
       <Container className="container">
+      <form onSubmit={handleFormSubmit}>
         <CenteredInputContainer>
           <SearchInput
             type="text"
@@ -83,10 +127,26 @@ const StartQuest = () => {
             value={formData.search}
             onChange={(e) => setFormData({ ...formData, search: e.target.value })}
           />
+        
+          {/* <SearchInput
+            type="text"
+            className="form-control mb-3"
+            name="questName"
+            placeholder="Name Your Quest"
+            value={formData.questName}
+            onChange={(e) => setFormData({ ...formData, search: e.target.value })}
+          /> */}
         </CenteredInputContainer>
         <div className="row">
           <div className="col">
-            {formData.inputs.map((input, index) => (
+          <InputField
+                  type="text"
+                  name="inputs"
+                  placeholder={``}
+                  value={formData.inputs}
+                  onChange={ handleInputChange}
+                />
+            {/* {formData.inputs.map((input, index) => (
               <Row key={index}>
                 <InputField
                   type="text"
@@ -95,7 +155,7 @@ const StartQuest = () => {
                   onChange={(e) => handleInputChange(e, index)}
                 />
               </Row>
-            ))}
+            ))} */}
           </div>
         </div>
         <CenteredInputContainer>
@@ -106,10 +166,12 @@ const StartQuest = () => {
           />
         </CenteredInputContainer>
         <CenteredInputContainer>
-          <Link to={{ pathname: '/SingleQuest', state: { card: cardData } }}>
-            <SubmitButton>Submit</SubmitButton>
-          </Link>
+          {/* <Link to={{ pathname: '/SingleQuest', state: { card: cardData } }}> */}
+            <SubmitButton type='submit'>Submit</SubmitButton>
+          {/* </Link> */}
+            
         </CenteredInputContainer>
+        </form>
       </Container>
     </CenteredContainer>
   );
