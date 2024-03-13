@@ -8,7 +8,7 @@ import Home from "./pages/Home.jsx"
 import StartQuest from './pages/StartQuest.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import SearchResults from './pages/SearchResults.jsx'
-import SingleQuest from './components/SingleQuest.jsx'
+import SingleQuest from './pages/SingleQuest.jsx'
 
 const router = createBrowserRouter([
         {
@@ -32,11 +32,14 @@ const router = createBrowserRouter([
                                 path: '/Dashboard',
                                 element: <Dashboard />
                         },
+                        
 
                            {    path: '/SearchResults',
-
-                          
-                                element: <SearchResults />
+                            element: <SearchResults />
+                        },
+                        {
+                                path: '/SingleQuest',
+                                element: <SingleQuest />
                         },
 
                 ],
