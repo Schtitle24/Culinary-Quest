@@ -27,7 +27,7 @@ const resolvers = {
       return QuestItems.findByPk(quest_item_id);
     },
 
-    //fetch all quests
+    //fetch all quests for query
     quests: async () => {
       return Quest.findAll();
     },
