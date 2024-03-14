@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 // import { useHistory } from 'react-router-dom';
 import questimg from '../imgs/CQ-img.jpeg';
+import { useLazyQuery, useQuery,gql } from '@apollo/client'
+import { QUERY_QUESTS } from '../utils/queries';
 import NavBarIcon from '../imgs/NavBarIcon.jpeg'
-import { useQuery, gql } from '@apollo/client';
+
 
 const Container = styled.div`
   display: flex;
@@ -148,12 +150,14 @@ const SEARCH_QUESTS_BY_CITY = gql`
 `;
 
 const Home = () => {
+  const [queryQuests, {data, error, loading}] = useLazyQuery(QUERY_QUESTS)
+  // State variables to hold the search query
   const [searchQuery, setSearchQuery] = useState('');
   // const history = useHistory();
 
-  const { loading, error, data } = useQuery(SEARCH_QUESTS_BY_CITY, {
-    variables: { city: searchQuery },
-  });
+  // const { loading, error, data } = useQuery(SEARCH_QUESTS_BY_CITY, {
+  //   variables: { city: searchQuery },
+  // });
 
   const handleInputChange = (event) => {
     setSearchQuery(event.target.value);
@@ -200,10 +204,10 @@ const Home = () => {
         </Form>
       </SearchSection>
       <ThoughtBubbleCard>
-        <p>
+        {data ? (<>{data?.quests.map((item) => <div><h2>{item.questName}</h2><p>{item.questDescription}</p></div>)}</>) : <p>
           Type the name of a city in the search bar to find Culinary quests in
           that location!
-        </p>
+        </p>}
       </ThoughtBubbleCard>
     </Container>
   );
