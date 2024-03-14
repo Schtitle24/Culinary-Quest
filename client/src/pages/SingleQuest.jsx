@@ -50,7 +50,7 @@ const TextInput = styled.input`
 // Component
 const SingleQuest = () => {
   const [restaurantData, setRestaurantData] = useState([
-    { name: 'Bills Famous', food: 'Pizza and Wings', checked: false },
+    { name: 'Rachels Heart', food: 'Patience Pasta', checked: false },
     { name: 'Timmy Jims', food: 'BBQ Burger', checked: false },
     { name: 'Ninja Warrior', food: 'Special Sushi', checked: false },
     { name: 'Pancho Villas', food: 'Beef Tacos', checked: false },
@@ -80,7 +80,7 @@ const SingleQuest = () => {
         </Section>
         <Section>
           <SectionTitle bold><strong>Username</strong></SectionTitle> {/* Bolded Username */}
-          <SubTitle>Harry Mcfarry</SubTitle>
+          <SubTitle>Harry McFarry</SubTitle>
         </Section>
         <Section>
           <SectionTitle>Restaurants & Food Items</SectionTitle>
