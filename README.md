@@ -54,4 +54,7 @@ Explore new cities, create and save personalized lists, and enjoy a hassle-free 
 * Brian Doherty: https://github.com/Bdoherty1
 * John Dennis: https://github.com/JohnDennis2
 
+## Original Application From Group Project
+https://github.com/JohnDennis2/CulinaryQuest
+
 
