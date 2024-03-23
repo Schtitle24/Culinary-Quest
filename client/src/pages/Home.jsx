@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-// import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import questimg from '../imgs/CQ-img.jpeg';
-import { useLazyQuery, useQuery,gql } from '@apollo/client'
+import { useLazyQuery, gql } from '@apollo/client';
 import { QUERY_QUESTS } from '../utils/queries';
-import NavBarIcon from '../imgs/NavBarIcon.jpeg'
+import NavBarIcon from '../imgs/NavBarIcon.jpeg';
 
 
 const Container = styled.div`
@@ -153,7 +153,7 @@ const Home = () => {
   const [queryQuests, {data, error, loading}] = useLazyQuery(QUERY_QUESTS)
   // State variables to hold the search query
   const [searchQuery, setSearchQuery] = useState('');
-  // const history = useHistory();
+  const navigate = useNavigate();
 
   // const { loading, error, data } = useQuery(SEARCH_QUESTS_BY_CITY, {
   //   variables: { city: searchQuery },
@@ -166,11 +166,7 @@ const Home = () => {
   const handleSearch = async () => {
     try {
       // Navigate to search results page with search query
-      history.push({
-        pathname: '/SearchResults',
-        search: `?city=${searchQuery}`,
-        state: { searchQuery }
-      });
+      navigate(`/SearchResults?city=${searchQuery}`);
     } catch (error) {
       console.error('Error searching quests:', error);
     }
