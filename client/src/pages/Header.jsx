@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import NavBarIcon from '../imgs/NavBarIcon.jpeg'; // Import your dropdown icon image
 import Auth from '../utils/auth'
+
 // Define the Mystery Quest font style
 const mysteryQuestFont = `
-  font-family: "Mystery Quest", system-ui;
-  font-weight: 400;
+  font-family: "Brush Script", system-ui;
+  font-weight: 500;
   font-style: normal;
 `;
 
@@ -14,7 +15,6 @@ const HeaderContainer = styled.div`
   background-color: #065446;
   color: #EAE7B1;
   display: flex;
-  
   justify-content: space-between;
   align-items: center;
 
@@ -97,7 +97,7 @@ const Title = styled.h1`
   padding: 20px;
   ${mysteryQuestFont}
 
-  @media screen and (max-width: 320px) 
+  @media screen and (max-width: 320px) {
     font-size: 36px;
     padding: 10px;
   }
@@ -106,7 +106,6 @@ const Title = styled.h1`
     text-align: center;
   }
 `;
-
 
 function Header() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -119,9 +118,15 @@ function Header() {
         <HeaderContainer>
             <Title>Culinary Quest</Title>
             <ButtonSection>
-                <Button as={Link} to="/AuthPage">Sign Up</Button>
-                <Button as={Link} to="/AuthPage">Login</Button>
-                <Button onClick={Auth.logout}>Log Out</Button>
+                {!Auth.loggedIn() && (
+                  <>
+                    <Button as={Link} to="/AuthPage">Sign Up</Button>
+                    <Button as={Link} to="/AuthPage">Login</Button>
+                  </>
+                )}
+                {Auth.loggedIn() && (
+                  <Button onClick={Auth.logout}>Log Out</Button>
+                )}
                 <div style={{ position: 'relative' }}>
                     <DropdownButton onClick={toggleDropdown} />
                     <DropdownMenu isOpen={isDropdownOpen}>
